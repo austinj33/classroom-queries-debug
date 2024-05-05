@@ -7,17 +7,17 @@ class DepartmentsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-    @department = Department.where({:id => the_id })
+    @departments = Department.where({:id => the_id }).at(0)
 
     render({ :template => "departments/show" })
   end
 
   def create
-    @department = Department.new
-    @department.name = params.fetch("query_name")
+    @departments = Department.new
+    @departments.name = params.fetch("query_name")
 
-    if @department.valid?
-      @department.save
+    if @departments.valid?
+      @departments.save
       redirect_to("/departments", { :notice => "Department created successfully." })
     else
       redirect_to("/departments", { :notice => "Department failed to create successfully." })

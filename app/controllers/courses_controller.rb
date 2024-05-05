@@ -7,19 +7,19 @@ class CoursesController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-    @course = Course.where({:id => the_id }).at(0)
+    @courses = Course.where({:id => the_id }).at(0)
 
     render({ :template => "courses/show" })
   end
 
   def create
-    @course = Course.new
-    @course.title = params.fetch("query_title")
-    @course.term_offered = params.fetch("query_term_")
-    @course.department_id = params.fetch("query_department_id")
+    @courses = Course.new
+    @courses.title = params.fetch("q_title")
+    @courses.term_offered = params.fetch("query_term")
+    @courses.department_id = params.fetch("query_department_id")
 
-    if @course.valid?
-      @course.save
+    if @courses.valid?
+      @courses.save
       redirect_to("/courses", { :notice => "Course created successfully." })
     else
       redirect_to("/courses", { :notice => "Course failed to create successfully." })
@@ -27,26 +27,26 @@ class CoursesController < ApplicationController
   end
 
   def update
-    id = params.fetch("path_id")
-    @course = Course.where({ :id => the_id }).at(0)
+    the_id = params.fetch("path_id")
+    @courses = Course.where({ :id => the_id }).at(0)
 
-    @course.title = params.fetch("query_title")
-    @course.term_offered = params.fetch("query_term_offered")
-    @course.department_id = params.fetch("query_department_id")
+    @courses.title = params.fetch("query_title")
+    @courses.term_offered = params.fetch("query_term_offered")
+    @courses.department_id = params.fetch("query_department_id")
 
-    if @course.valid?
-      @course.save
-      redirect_to("/courses/#{@course.id}", { :notice => "Course updated successfully."} )
+    if @courses.valid?
+      @courses.save
+      redirect_to("/courses/#{@courses.id}", { :notice => "Course updated successfully."} )
     else
-      redirect_to("/courses/#{@course.id}", { :alert => "Course failed to update successfully." })
+      redirect_to("/courses/#{@courses.id}", { :alert => "Course failed to update successfully." })
     end
   end
 
   def destroy
-    the_id = params.fetch("path")
-    @course = Course.where({ :id => the_id }).at(0)
+    the_id = params.fetch("path_id")
+    @courses = Course.where({ :id => the_id }).at(0)
 
-    @course.destroy
+    @courses.destroy
 
     redirect_to("/courses", { :notice => "Course deleted successfully."} )
   end
